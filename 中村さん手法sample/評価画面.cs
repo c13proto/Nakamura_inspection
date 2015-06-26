@@ -55,7 +55,7 @@ namespace 中村さん手法sample
         }
         private void 評価開始()
         {
-            Console.WriteLine("評価開始");
+             System.Diagnostics.Debug.WriteLine("評価開始");
             if (checkBox_list.Checked) リストの作成();
             else if (checkBox_PfGA.Checked) PfGA処理();
             else 遺伝的アルゴリズム処理();
@@ -191,7 +191,7 @@ namespace 中村さん手法sample
         }
         private int 評価結果(int p1,int p2,int p3,int p4,int p5)
         {
-            //Console.WriteLine("画像処理中");
+            // System.Diagnostics.Debug.WriteLine("画像処理中");
             膨張と二値化(p1, p2);
             トップハットを二値化(p3, p4, p5);
             比較作業();
@@ -234,7 +234,7 @@ namespace 中村さん手法sample
                 gene = 成績順から次の遺伝子を作成(gene, 実験体数, パラメータ, 受け継がれる個体数, 突然変異確率, 突然変異の範囲);
                 gene = 遺伝子を成績順にソート(gene, 実験体数, パラメータ.Length / 2);
                 
-                Console.WriteLine(今の世代);
+                 System.Diagnostics.Debug.WriteLine(今の世代);
                 progressBar1.Value = 今の世代;
 
                 if (今の世代 % 2 == 0 || 今の世代==1)//途中と最終結果を出力 
@@ -270,7 +270,7 @@ namespace 中村さん手法sample
         }
         private int[,] 遺伝子を成績順にソート(int[,] 遺伝子, int 遺伝子の個数, int パラメータ数)
         {
-            //Console.WriteLine("遺伝子ソート中");
+            // System.Diagnostics.Debug.WriteLine("遺伝子ソート中");
             bool NotSort = true;
             while (NotSort)
             {
@@ -297,7 +297,7 @@ namespace 中村さん手法sample
         }
         private int[,] 成績順から次の遺伝子を作成(int[,] 成績順の遺伝子, int 遺伝子作成数,int[,] パラメータ,int 上位数,int 突然変異率,int 影響範囲)//突然変異率は%
         {
-            //Console.WriteLine("遺伝子作成中");
+            // System.Diagnostics.Debug.WriteLine("遺伝子作成中");
             int[,] 新しい遺伝子 = new int[遺伝子作成数, パラメータ.Length/2 + 1];
             
             //上位遺伝子の選定
@@ -404,7 +404,7 @@ namespace 中村さん手法sample
         }
         private void 遺伝子情報を画面に出力(int p1,int p2,int p3,int p4,int p5,int 点数)
         {
-            Console.WriteLine("画像出力");
+             System.Diagnostics.Debug.WriteLine("画像出力");
             膨張と二値化(p1, p2);
             トップハットを二値化(p3, p4, p5);
             比較作業();
@@ -450,7 +450,7 @@ namespace 中村さん手法sample
             }
             for (int i = 0; i < 正解座標2.Length / 2; i++)
             {//検出されなかった座標が残る
-                Console.WriteLine(正解座標2[i, 0] + "," + 正解座標2[i, 1]);
+                 System.Diagnostics.Debug.WriteLine(正解座標2[i, 0] + "," + 正解座標2[i, 1]);
             }
 
             Cv.PutText(color_result, "p1 = " + p1, new CvPoint(10, 20), フォント, new CvColor(0, 0, 0));
@@ -514,7 +514,7 @@ namespace 中村さん手法sample
                     局所集団[i, パラメータ.Length / 2] = 評価結果(局所集団[i, 0], 局所集団[i, 1], 局所集団[i, 2], 局所集団[i, 3], 局所集団[i, 4]);
                 
                 }
-                Console.WriteLine(今の世代);
+                 System.Diagnostics.Debug.WriteLine(今の世代);
                 progressBar1.Value = 今の世代;
 
                 if (今の世代 % 100 == 0 || 今の世代 == 1 || perfect)//途中と最終結果を出力 
@@ -528,7 +528,7 @@ namespace 中村さん手法sample
 
             局所集団 = 遺伝子を成績順にソート(局所集団, 4, パラメータ.Length / 2);
             遺伝子情報を画面に出力(局所集団[0, 0], 局所集団[0, 1], 局所集団[0, 2], 局所集団[0, 3], 局所集団[0, 4], 局所集団[0, 5]);
-            Console.WriteLine("PfGA終了");
+             System.Diagnostics.Debug.WriteLine("PfGA終了");
             progressBar1.Value = 最終世代;
         }
         private int[] ランダムに遺伝子1つ作成(int[,] パラメータ)
@@ -547,7 +547,7 @@ namespace 中村さん手法sample
             {
                 gene[i] = r.Next(パラメータ[i, 0], パラメータ[i, 1] + 1);
             }
-            //Console.WriteLine("" + gene[0] + "," + gene[1] + "," + gene[2] + "," + gene[3] + "," + gene[4] + "\n");
+            // System.Diagnostics.Debug.WriteLine("" + gene[0] + "," + gene[1] + "," + gene[2] + "," + gene[3] + "," + gene[4] + "\n");
 
             return gene;
 
@@ -621,7 +621,7 @@ namespace 中村さん手法sample
             for (int i = 0; i < 4; i++)
             {
                 group[i, パラメータ.Length / 2] = 評価結果(group[i, 0], group[i, 1], group[i, 2], group[i, 3], group[i, 4]);
-                //Console.WriteLine("" + group[i, 0] + "," + group[i, 1] + "," + group[i, 2] + "," + group[i, 3] + "," + group[i, 4] + "," + group[i, 5] + "\n");
+                // System.Diagnostics.Debug.WriteLine("" + group[i, 0] + "," + group[i, 1] + "," + group[i, 2] + "," + group[i, 3] + "," + group[i, 4] + "," + group[i, 5] + "\n");
             }
             if (group[0, パラメータ.Length / 2] > group[1, パラメータ.Length / 2])
                 for (int i = 0; i < パラメータ.Length / 2; i++)
@@ -745,7 +745,7 @@ namespace 中村さん手法sample
                     next_group[3, i] = 新子供2[i];
                 }
             }
-            else Console.WriteLine("newPattern?");
+            else  System.Diagnostics.Debug.WriteLine("newPattern?");
 
             return next_group;
         }
@@ -787,15 +787,15 @@ namespace 中村さん手法sample
                             ノルマ達成 = true;
                         }
                     }
-                    Console.WriteLine("総世代数:" + 総世代数 + ",累計達成者:" + 累計達成者);
+                     System.Diagnostics.Debug.WriteLine("総世代数:" + 総世代数 + ",累計達成者:" + 累計達成者);
                     総世代数++;
                 }
                 累計達成者++;
                 遺伝子情報をCSV出力(リスト, 目標累計, パラメータ.Length / 2, DateTime.Now.ToString("yy-MM-dd_") + "List" + "_" + 目標スコア[0] + "_" + 目標スコア[1] );
-                //Console.WriteLine("総世代数:" + 総世代数+",累計満点者:"+累計満点者);
+                // System.Diagnostics.Debug.WriteLine("総世代数:" + 総世代数+",累計満点者:"+累計満点者);
             }
-            Console.WriteLine("総世代数:" + 総世代数 + ",累計達成者:" + 累計達成者);
-            Console.WriteLine("リスト出力完了");
+             System.Diagnostics.Debug.WriteLine("総世代数:" + 総世代数 + ",累計達成者:" + 累計達成者);
+             System.Diagnostics.Debug.WriteLine("リスト出力完了");
             progressBar1.Value = 目標累計;
         }
         private int[,] 局所集団の初期化(int[,] パラメータ)
