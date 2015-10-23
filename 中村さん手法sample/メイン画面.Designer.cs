@@ -82,6 +82,7 @@
             this.pictureBoxIpl1.Location = new System.Drawing.Point(94, 11);
             this.pictureBoxIpl1.Name = "pictureBoxIpl1";
             this.pictureBoxIpl1.Size = new System.Drawing.Size(295, 293);
+            this.pictureBoxIpl1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBoxIpl1.TabIndex = 3;
             this.pictureBoxIpl1.TabStop = false;
             this.pictureBoxIpl1.Click += new System.EventHandler(this.OnClick_pictureBoxIpl1);

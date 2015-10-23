@@ -39,7 +39,6 @@ namespace 中村さん手法sample
             if (編集前の検査対象画像 != null) 編集前の検査対象画像.Dispose();
             編集前の検査対象画像 = メイン画面.検査対象画像.Clone();
 
-            pictureBoxIpl1.Size = メイン画面.pictureBoxIplのサイズ調整(編集前のテンプレ画像);
             pictureBoxIpl1.ImageIpl = 編集前の検査対象画像;
         }
         public static 評価画面 Instance

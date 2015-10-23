@@ -24,7 +24,6 @@ namespace 中村さん手法sample
             InitializeComponent();
             if(編集前!=null)編集前.Dispose();
             編集前 = メイン画面.テンプレ画像.Clone();
-            pictureBoxIpl1.Size = メイン画面.pictureBoxIplのサイズ調整(編集前);
             膨張と二値化();
         }
         public static テンプレート画像画面 Instance

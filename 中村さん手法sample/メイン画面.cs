@@ -49,7 +49,6 @@ namespace 中村さん手法sample
                 if (テンプレ画像 != null) テンプレ画像.Dispose();
                 テンプレ画像 = new IplImage(dialog.FileName, LoadMode.GrayScale);
                 テンプレート画像画面.Instance.Show();
-                pictureBoxIpl1.Size = pictureBoxIplのサイズ調整(テンプレ画像);
                 pictureBoxIpl1.ImageIpl = テンプレ画像;
             }
         }
@@ -72,7 +71,6 @@ namespace 中村さん手法sample
                 if (検査対象画像 != null) 検査対象画像.Dispose();
                 検査対象画像 = new IplImage(dialog.FileName, LoadMode.GrayScale);
                 検査対象画像画面.Instance.Show();
-                pictureBoxIpl1.Size = pictureBoxIplのサイズ調整(検査対象画像);
                 pictureBoxIpl1.ImageIpl = 検査対象画像;
             }
         }
@@ -95,7 +93,6 @@ namespace 中村さん手法sample
                 //target.Add(検査対象画像画面.編集後,target,mask);
                 Cv.Copy(検査対象画像画面.編集後,target,mask);//mask(サンプルの白黒反転)の白と検査対象の白部分の重複部のみが映しだされる
 
-                pictureBoxIpl1.Size = pictureBoxIplのサイズ調整(target);
                 if (検査結果画像 != null) 検査結果画像.Dispose();
                 検査結果画像 = target.Clone();
                 pictureBoxIpl1.ImageIpl = 検査結果画像;
@@ -105,10 +102,6 @@ namespace 中村さん手法sample
 
             ノイズ除去();
 
-        }
-        public static System.Drawing.Size pictureBoxIplのサイズ調整(IplImage sample)
-        {
-            return new System.Drawing.Size(sample.Width, sample.Height);
         }
 
 
