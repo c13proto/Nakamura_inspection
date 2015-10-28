@@ -53,12 +53,18 @@
             this.checkBox_list = new System.Windows.Forms.CheckBox();
             this.textBox_list_num = new System.Windows.Forms.TextBox();
             this.textBox_list_score = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBox_7e = new System.Windows.Forms.TextBox();
+            this.textBox_7s = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.textBox_6e = new System.Windows.Forms.TextBox();
+            this.textBox_6s = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIpl1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBoxIpl1
             // 
-            this.pictureBoxIpl1.Location = new System.Drawing.Point(120, 9);
+            this.pictureBoxIpl1.Location = new System.Drawing.Point(126, 9);
             this.pictureBoxIpl1.Name = "pictureBoxIpl1";
             this.pictureBoxIpl1.Size = new System.Drawing.Size(295, 293);
             this.pictureBoxIpl1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -127,7 +133,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1, 153);
+            this.label4.Location = new System.Drawing.Point(7, 145);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(29, 12);
             this.label4.TabIndex = 15;
@@ -135,7 +141,7 @@
             // 
             // textBox_4e
             // 
-            this.textBox_4e.Location = new System.Drawing.Point(84, 150);
+            this.textBox_4e.Location = new System.Drawing.Point(90, 142);
             this.textBox_4e.Name = "textBox_4e";
             this.textBox_4e.Size = new System.Drawing.Size(30, 19);
             this.textBox_4e.TabIndex = 14;
@@ -143,7 +149,7 @@
             // 
             // textBox_4s
             // 
-            this.textBox_4s.Location = new System.Drawing.Point(48, 150);
+            this.textBox_4s.Location = new System.Drawing.Point(54, 142);
             this.textBox_4s.Name = "textBox_4s";
             this.textBox_4s.Size = new System.Drawing.Size(30, 19);
             this.textBox_4s.TabIndex = 13;
@@ -152,7 +158,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1, 112);
+            this.label5.Location = new System.Drawing.Point(7, 104);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 12);
             this.label5.TabIndex = 12;
@@ -169,7 +175,7 @@
             // 
             // textBox_3e
             // 
-            this.textBox_3e.Location = new System.Drawing.Point(84, 125);
+            this.textBox_3e.Location = new System.Drawing.Point(90, 117);
             this.textBox_3e.Name = "textBox_3e";
             this.textBox_3e.Size = new System.Drawing.Size(30, 19);
             this.textBox_3e.TabIndex = 10;
@@ -177,7 +183,7 @@
             // 
             // textBox_3s
             // 
-            this.textBox_3s.Location = new System.Drawing.Point(48, 125);
+            this.textBox_3s.Location = new System.Drawing.Point(54, 117);
             this.textBox_3s.Name = "textBox_3s";
             this.textBox_3s.Size = new System.Drawing.Size(30, 19);
             this.textBox_3s.TabIndex = 9;
@@ -186,7 +192,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(1, 178);
+            this.label7.Location = new System.Drawing.Point(7, 170);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(41, 12);
             this.label7.TabIndex = 18;
@@ -194,7 +200,7 @@
             // 
             // textBox_5e
             // 
-            this.textBox_5e.Location = new System.Drawing.Point(84, 175);
+            this.textBox_5e.Location = new System.Drawing.Point(90, 167);
             this.textBox_5e.Name = "textBox_5e";
             this.textBox_5e.Size = new System.Drawing.Size(30, 19);
             this.textBox_5e.TabIndex = 17;
@@ -202,7 +208,7 @@
             // 
             // textBox_5s
             // 
-            this.textBox_5s.Location = new System.Drawing.Point(48, 175);
+            this.textBox_5s.Location = new System.Drawing.Point(54, 167);
             this.textBox_5s.Name = "textBox_5s";
             this.textBox_5s.Size = new System.Drawing.Size(30, 19);
             this.textBox_5s.TabIndex = 16;
@@ -210,7 +216,7 @@
             // 
             // 開始ボタン
             // 
-            this.開始ボタン.Location = new System.Drawing.Point(12, 200);
+            this.開始ボタン.Location = new System.Drawing.Point(12, 295);
             this.開始ボタン.Name = "開始ボタン";
             this.開始ボタン.Size = new System.Drawing.Size(75, 23);
             this.開始ボタン.TabIndex = 19;
@@ -220,7 +226,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(3, 230);
+            this.progressBar1.Location = new System.Drawing.Point(3, 325);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(111, 23);
             this.progressBar1.TabIndex = 20;
@@ -230,7 +236,7 @@
             this.checkBox_PfGA.AutoSize = true;
             this.checkBox_PfGA.Checked = true;
             this.checkBox_PfGA.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_PfGA.Location = new System.Drawing.Point(12, 269);
+            this.checkBox_PfGA.Location = new System.Drawing.Point(12, 364);
             this.checkBox_PfGA.Name = "checkBox_PfGA";
             this.checkBox_PfGA.Size = new System.Drawing.Size(51, 16);
             this.checkBox_PfGA.TabIndex = 21;
@@ -239,7 +245,7 @@
             // 
             // textBox_PfGA
             // 
-            this.textBox_PfGA.Location = new System.Drawing.Point(69, 266);
+            this.textBox_PfGA.Location = new System.Drawing.Point(69, 361);
             this.textBox_PfGA.Name = "textBox_PfGA";
             this.textBox_PfGA.Size = new System.Drawing.Size(30, 19);
             this.textBox_PfGA.TabIndex = 22;
@@ -248,7 +254,7 @@
             // checkBox_list
             // 
             this.checkBox_list.AutoSize = true;
-            this.checkBox_list.Location = new System.Drawing.Point(12, 286);
+            this.checkBox_list.Location = new System.Drawing.Point(12, 381);
             this.checkBox_list.Name = "checkBox_list";
             this.checkBox_list.Size = new System.Drawing.Size(108, 16);
             this.checkBox_list.TabIndex = 23;
@@ -257,7 +263,7 @@
             // 
             // textBox_list_num
             // 
-            this.textBox_list_num.Location = new System.Drawing.Point(90, 308);
+            this.textBox_list_num.Location = new System.Drawing.Point(90, 403);
             this.textBox_list_num.Name = "textBox_list_num";
             this.textBox_list_num.Size = new System.Drawing.Size(30, 19);
             this.textBox_list_num.TabIndex = 24;
@@ -265,11 +271,61 @@
             // 
             // textBox_list_score
             // 
-            this.textBox_list_score.Location = new System.Drawing.Point(12, 308);
+            this.textBox_list_score.Location = new System.Drawing.Point(12, 403);
             this.textBox_list_score.Name = "textBox_list_score";
             this.textBox_list_score.Size = new System.Drawing.Size(75, 19);
             this.textBox_list_score.TabIndex = 25;
             this.textBox_list_score.Text = "8000,9500";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(7, 266);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(34, 12);
+            this.label8.TabIndex = 31;
+            this.label8.Text = "明るさ";
+            // 
+            // textBox_7e
+            // 
+            this.textBox_7e.Location = new System.Drawing.Point(90, 263);
+            this.textBox_7e.Name = "textBox_7e";
+            this.textBox_7e.Size = new System.Drawing.Size(30, 19);
+            this.textBox_7e.TabIndex = 30;
+            this.textBox_7e.Text = "200";
+            // 
+            // textBox_7s
+            // 
+            this.textBox_7s.Location = new System.Drawing.Point(54, 263);
+            this.textBox_7s.Name = "textBox_7s";
+            this.textBox_7s.Size = new System.Drawing.Size(30, 19);
+            this.textBox_7s.TabIndex = 29;
+            this.textBox_7s.Text = "10";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(7, 224);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(52, 12);
+            this.label9.TabIndex = 28;
+            this.label9.Text = "傾き(/10)";
+            // 
+            // textBox_6e
+            // 
+            this.textBox_6e.Location = new System.Drawing.Point(90, 238);
+            this.textBox_6e.Name = "textBox_6e";
+            this.textBox_6e.Size = new System.Drawing.Size(30, 19);
+            this.textBox_6e.TabIndex = 27;
+            this.textBox_6e.Text = "100";
+            // 
+            // textBox_6s
+            // 
+            this.textBox_6s.Location = new System.Drawing.Point(54, 238);
+            this.textBox_6s.Name = "textBox_6s";
+            this.textBox_6s.Size = new System.Drawing.Size(30, 19);
+            this.textBox_6s.TabIndex = 26;
+            this.textBox_6s.Text = "10";
             // 
             // 評価画面
             // 
@@ -277,7 +333,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(425, 348);
+            this.ClientSize = new System.Drawing.Size(474, 437);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.textBox_7e);
+            this.Controls.Add(this.textBox_7s);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.textBox_6e);
+            this.Controls.Add(this.textBox_6s);
             this.Controls.Add(this.textBox_list_score);
             this.Controls.Add(this.textBox_list_num);
             this.Controls.Add(this.checkBox_list);
@@ -338,5 +400,11 @@
         private System.Windows.Forms.CheckBox checkBox_list;
         private System.Windows.Forms.TextBox textBox_list_num;
         private System.Windows.Forms.TextBox textBox_list_score;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox textBox_7e;
+        private System.Windows.Forms.TextBox textBox_7s;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox textBox_6e;
+        private System.Windows.Forms.TextBox textBox_6s;
     }
 }

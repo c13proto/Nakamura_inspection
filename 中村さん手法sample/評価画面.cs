@@ -78,11 +78,17 @@ namespace 中村さん手法sample
             sample.Dispose();
             element.Dispose();
         }
-        private void トップハットを二値化(int サイズ,int 回数,int threshold)
+        private void トップハットを二値化(int サイズ,int 回数,int threshold,int 傾き,int 明るさ)
         {
             IplConvKernel element = Cv.CreateStructuringElementEx(サイズ, サイズ, サイズ / 2, サイズ / 2, ElementShape.Rect);
             IplImage temp = 編集前の検査対象画像.Clone();
             IplImage sample = 編集前の検査対象画像.Clone();
+
+            if (傾き != 0 && 明るさ != 0)
+            {
+                sample = コントラスト調整(sample, 傾き / 10.0);
+                sample = brightness(sample, 明るさ);
+            }
             Cv.MorphologyEx(sample, sample, temp, element, MorphologyOperation.TopHat, 回数);
             //トップハット = sample.Clone();
             Cv.Threshold(sample, sample, threshold, 255, ThresholdType.Binary);
@@ -91,6 +97,71 @@ namespace 中村さん手法sample
             sample.Dispose();
             temp.Dispose();
             element.Dispose();
+        }
+        IplImage コントラスト調整(IplImage src, double 倍率)
+        {
+            IplImage sample = src.Clone();
+            int width = src.Width;
+            int height = src.Height;
+
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                {
+                    double val;
+                    CvScalar cs = Cv.Get2D(src, y, x);
+                    val = cs.Val0 * 倍率;
+                    if (val > 255) cs.Val0 = 255;
+                    else cs.Val0 = val;
+                    Cv.Set2D(sample, y, x, cs);
+                }
+            //for (int num = 0; num < 4; num++)images[num].Dispose();元のものに影響するっぽい
+            return sample;
+        }
+        IplImage brightness(IplImage src, double 目標)
+        {//中心近くの9ピクセルから輝度調整
+            IplImage sample = src.Clone();
+            int width = src.Width;
+            int height = src.Height;
+            int center_x = 640 / 2;
+            int center_y = 480 / 2;
+            CvSize roiSize = new CvSize(640, 480);
+
+
+            for (int roi = 0; roi < 4; roi++)
+            {
+                double[] vals = new double[9];
+                double average = 0;
+                double diff = 0;
+
+                CvPoint roiPoint;
+                if (roi == 1) roiPoint = new CvPoint(640, 0);
+                else if (roi == 2) roiPoint = new CvPoint(0, 480);
+                else if (roi == 3) roiPoint = new CvPoint(640, 480);
+                else roiPoint = new CvPoint(0, 0);
+
+                Cv.SetImageROI(src, new CvRect(roiPoint, roiSize));
+
+                vals[0] = Cv.Get2D(src, center_y - 10, center_x - 10); vals[3] = Cv.Get2D(src, center_y - 10, center_x); vals[6] = Cv.Get2D(src, center_y - 10, center_x + 10);
+                vals[1] = Cv.Get2D(src, center_y, center_x - 10); vals[4] = Cv.Get2D(src, center_y, center_x); vals[7] = Cv.Get2D(src, center_y, center_x + 10);
+                vals[2] = Cv.Get2D(src, center_y + 10, center_x - 10); vals[5] = Cv.Get2D(src, center_y + 10, center_x); vals[8] = Cv.Get2D(src, center_y + 10, center_x + 10);
+
+                for (int num = 0; num < 9; num++) average += vals[num];
+                average = average / 9.0;
+                diff = 目標 - average;
+
+                for (int x = 0; x < 640; x++)
+                    for (int y = 0; y < 480; y++)
+                    {
+                        CvScalar cs = Cv.Get2D(src, y, x);
+                        double val = cs.Val0 + diff;
+                        if (val > 255) cs.Val0 = 255;
+                        else cs.Val0 = val;
+                        Cv.Set2D(sample, roiPoint.Y + y, roiPoint.X + x, cs);
+                    }
+                Cv.ResetImageROI(src);
+                if (width == 640) break;
+            }
+            return sample;
         }
         private void 比較作業()
         {
@@ -188,11 +259,11 @@ namespace 中村さん手法sample
 
             return a * b * c * d * e;
         }
-        private int 評価結果(int p1,int p2,int p3,int p4,int p5)
+        private int 評価結果(int p1,int p2,int p3,int p4,int p5,int p6,int p7)
         {
             // System.Diagnostics.Debug.WriteLine("画像処理中");
             膨張と二値化(p1, p2);
-            トップハットを二値化(p3, p4, p5);
+            トップハットを二値化(p3, p4, p5,p6,p7);
             比較作業();
             int[] 正解不正解 = ノイズ除去();
             
@@ -242,7 +313,7 @@ namespace 中村さん手法sample
 
                 今の世代++;
             }
-            遺伝子情報を画面に出力(gene[0, 0], gene[0, 1], gene[0, 2], gene[0, 3], gene[0, 4], gene[0, 5]);
+            遺伝子情報を画面に出力(gene[0, 0], gene[0, 1], gene[0, 2], gene[0, 3], gene[0, 4], gene[0, 5], gene[0, 6], gene[0, 7]);
 
 
         }
@@ -263,7 +334,7 @@ namespace 中村さん手法sample
                     gene[i, j] = r.Next(パラメータ[j, 0], パラメータ[j, 1] + 1);
             for (int i = 0; i < 遺伝子の個数; i++)//パラメータの後(パラメータ数+1番目)に成績を代入
             {
-                gene[i, パラメータ.Length / 2] = 評価結果(gene[i, 0], gene[i, 1], gene[i, 2], gene[i, 3], gene[i, 4]);
+                gene[i, パラメータ.Length / 2] = 評価結果(gene[i, 0], gene[i, 1], gene[i, 2], gene[i, 3], gene[i, 4], gene[i, 5], gene[i, 6]);
             }
             return gene;
         }
@@ -352,7 +423,7 @@ namespace 中村さん手法sample
                 for (int j = 0; j < パラメータ数; j++) 
                    交叉遺伝子[i, j] = 上位の遺伝子[r.Next(上位数), j];
             for (int i = 0; i < 作成数; i++)//成績を代入
-                交叉遺伝子[i, パラメータ数] = 評価結果(交叉遺伝子[i, 0], 交叉遺伝子[i, 1], 交叉遺伝子[i, 2], 交叉遺伝子[i, 3], 交叉遺伝子[i, 4]);
+                交叉遺伝子[i, パラメータ数] = 評価結果(交叉遺伝子[i, 0], 交叉遺伝子[i, 1], 交叉遺伝子[i, 2], 交叉遺伝子[i, 3], 交叉遺伝子[i, 4], 交叉遺伝子[i, 5], 交叉遺伝子[i, 6]);
 
            return 交叉遺伝子;
         }
@@ -401,11 +472,11 @@ namespace 中村さん手法sample
                 w.Write(結果);
             }
         }
-        private void 遺伝子情報を画面に出力(int p1,int p2,int p3,int p4,int p5,int 点数)
+        private void 遺伝子情報を画面に出力(int p1,int p2,int p3,int p4,int p5,int p6,int p7,int 点数)
         {
              System.Diagnostics.Debug.WriteLine("画像出力");
             膨張と二値化(p1, p2);
-            トップハットを二値化(p3, p4, p5);
+            トップハットを二値化(p3, p4, p5,p6,p7);
             比較作業();
 
             //ここからノイズ除去と描画処理
@@ -457,7 +528,9 @@ namespace 中村さん手法sample
             Cv.PutText(color_result, "p3 = " + p3, new CvPoint(10, 60), フォント, new CvColor(0, 0, 0));
             Cv.PutText(color_result, "p4 = " + p4, new CvPoint(10, 80), フォント, new CvColor(0, 0, 0));
             Cv.PutText(color_result, "p5 = " + p5, new CvPoint(10, 100), フォント, new CvColor(0, 0, 0));
-            Cv.PutText(color_result, "score= " + 点数, new CvPoint(10, 120), フォント, new CvColor(0, 0, 0));
+            Cv.PutText(color_result, "p6 = " + p6, new CvPoint(10, 120), フォント, new CvColor(0, 0, 0));
+            Cv.PutText(color_result, "p7 = " + p7, new CvPoint(10, 140), フォント, new CvColor(0, 0, 0));
+            Cv.PutText(color_result, "score= " + 点数, new CvPoint(10, 160), フォント, new CvColor(0, 0, 0));
 
             pictureBoxIpl1.ImageIpl = color_result;
             if (最終工程終了画像 != null) 最終工程終了画像.Dispose();
@@ -485,6 +558,8 @@ namespace 中村さん手法sample
                 {int.Parse(textBox_3s.Text),int.Parse(textBox_3e.Text)},
                 {int.Parse(textBox_4s.Text),int.Parse(textBox_4e.Text)},
                 {int.Parse(textBox_5s.Text),int.Parse(textBox_5e.Text)}, 
+                {int.Parse(textBox_6s.Text),int.Parse(textBox_6e.Text)},
+                {int.Parse(textBox_7s.Text),int.Parse(textBox_7e.Text)}, 
             };
 
             //親は[0~1,],子は[2~3,]に戻す
@@ -510,7 +585,7 @@ namespace 中村さん手法sample
                 局所集団 = 次の局所集団を作成(局所集団, パラメータ);
                 for (int i = 0; i < 4; i++)
                 {
-                    局所集団[i, パラメータ.Length / 2] = 評価結果(局所集団[i, 0], 局所集団[i, 1], 局所集団[i, 2], 局所集団[i, 3], 局所集団[i, 4]);
+                    局所集団[i, パラメータ.Length / 2] = 評価結果(局所集団[i, 0], 局所集団[i, 1], 局所集団[i, 2], 局所集団[i, 3], 局所集団[i, 4],局所集団[i, 5],局所集団[i, 6]);
                 
                 }
                  System.Diagnostics.Debug.WriteLine(今の世代);
@@ -526,7 +601,7 @@ namespace 中村さん手法sample
             }
 
             局所集団 = 遺伝子を成績順にソート(局所集団, 4, パラメータ.Length / 2);
-            遺伝子情報を画面に出力(局所集団[0, 0], 局所集団[0, 1], 局所集団[0, 2], 局所集団[0, 3], 局所集団[0, 4], 局所集団[0, 5]);
+            遺伝子情報を画面に出力(局所集団[0, 0], 局所集団[0, 1], 局所集団[0, 2], 局所集団[0, 3], 局所集団[0, 4], 局所集団[0, 5], 局所集団[0, 6], 局所集団[0, 7]);
              System.Diagnostics.Debug.WriteLine("PfGA終了");
             progressBar1.Value = 最終世代;
         }
@@ -619,7 +694,7 @@ namespace 中村さん手法sample
             //パラメータから点数を評価
             for (int i = 0; i < 4; i++)
             {
-                group[i, パラメータ.Length / 2] = 評価結果(group[i, 0], group[i, 1], group[i, 2], group[i, 3], group[i, 4]);
+                group[i, パラメータ.Length / 2] = 評価結果(group[i, 0], group[i, 1], group[i, 2], group[i, 3], group[i, 4], group[i, 5], group[i, 6]);
                 // System.Diagnostics.Debug.WriteLine("" + group[i, 0] + "," + group[i, 1] + "," + group[i, 2] + "," + group[i, 3] + "," + group[i, 4] + "," + group[i, 5] + "\n");
             }
             if (group[0, パラメータ.Length / 2] > group[1, パラメータ.Length / 2])
@@ -762,6 +837,8 @@ namespace 中村さん手法sample
                 {int.Parse(textBox_3s.Text),int.Parse(textBox_3e.Text)},
                 {int.Parse(textBox_4s.Text),int.Parse(textBox_4e.Text)},
                 {int.Parse(textBox_5s.Text),int.Parse(textBox_5e.Text)}, 
+                {int.Parse(textBox_6s.Text),int.Parse(textBox_6e.Text)}, 
+                {int.Parse(textBox_7s.Text),int.Parse(textBox_7e.Text)}, 
             };
             //親は[0~1,],子は[2~3,]に戻す
             int[,] 局所集団 = new int[4, パラメータ.Length / 2 + 1];
@@ -777,7 +854,7 @@ namespace 中村さん手法sample
                 while (!ノルマ達成)
                 {
                     局所集団 = 次の局所集団を作成(局所集団, パラメータ);
-                    for (int i = 0; i < 4; i++) 局所集団[i, パラメータ.Length / 2] = 評価結果(局所集団[i, 0], 局所集団[i, 1], 局所集団[i, 2], 局所集団[i, 3], 局所集団[i, 4]);
+                    for (int i = 0; i < 4; i++) 局所集団[i, パラメータ.Length / 2] = 評価結果(局所集団[i, 0], 局所集団[i, 1], 局所集団[i, 2], 局所集団[i, 3], 局所集団[i, 4], 局所集団[i, 5], 局所集団[i, 6]);
                     for (int i = 0; i < 4; i++)
                     {
                         if (局所集団[i, パラメータ.Length / 2] >= int.Parse(目標スコア[0]) && 局所集団[i, パラメータ.Length / 2] <= int.Parse(目標スコア[1]))

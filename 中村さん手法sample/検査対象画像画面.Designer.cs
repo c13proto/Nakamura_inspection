@@ -56,6 +56,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.trackBar_bright = new System.Windows.Forms.TrackBar();
             this.textBox_bright = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIpl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_元画像TH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_サイズ)).BeginInit();
@@ -280,7 +281,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 72);
+            this.label8.Location = new System.Drawing.Point(12, 28);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(26, 12);
             this.label8.TabIndex = 27;
@@ -289,7 +290,7 @@
             // trackBar_cont
             // 
             this.trackBar_cont.AutoSize = false;
-            this.trackBar_cont.Location = new System.Drawing.Point(7, 87);
+            this.trackBar_cont.Location = new System.Drawing.Point(7, 46);
             this.trackBar_cont.Maximum = 80;
             this.trackBar_cont.Minimum = 10;
             this.trackBar_cont.Name = "trackBar_cont";
@@ -300,7 +301,7 @@
             // 
             // textBox_cont
             // 
-            this.textBox_cont.Location = new System.Drawing.Point(52, 66);
+            this.textBox_cont.Location = new System.Drawing.Point(52, 25);
             this.textBox_cont.Name = "textBox_cont";
             this.textBox_cont.Size = new System.Drawing.Size(30, 19);
             this.textBox_cont.TabIndex = 25;
@@ -310,7 +311,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(14, 28);
+            this.label9.Location = new System.Drawing.Point(14, 75);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(34, 12);
             this.label9.TabIndex = 24;
@@ -319,7 +320,7 @@
             // trackBar_bright
             // 
             this.trackBar_bright.AutoSize = false;
-            this.trackBar_bright.Location = new System.Drawing.Point(7, 46);
+            this.trackBar_bright.Location = new System.Drawing.Point(7, 93);
             this.trackBar_bright.Maximum = 255;
             this.trackBar_bright.Name = "trackBar_bright";
             this.trackBar_bright.Size = new System.Drawing.Size(79, 20);
@@ -329,12 +330,22 @@
             // 
             // textBox_bright
             // 
-            this.textBox_bright.Location = new System.Drawing.Point(52, 25);
+            this.textBox_bright.Location = new System.Drawing.Point(52, 72);
             this.textBox_bright.Name = "textBox_bright";
             this.textBox_bright.Size = new System.Drawing.Size(30, 19);
             this.textBox_bright.TabIndex = 22;
             this.textBox_bright.Text = "100";
             this.textBox_bright.TextChanged += new System.EventHandler(this.TextChanged_bright);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(7, 453);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 28;
+            this.button1.Text = "保存";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.OnClick_保存);
             // 
             // 検査対象画像画面
             // 
@@ -342,7 +353,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(678, 480);
+            this.ClientSize = new System.Drawing.Size(729, 538);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.trackBar_cont);
             this.Controls.Add(this.textBox_cont);
@@ -415,5 +427,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TrackBar trackBar_bright;
         private System.Windows.Forms.TextBox textBox_bright;
+        private System.Windows.Forms.Button button1;
     }
 }

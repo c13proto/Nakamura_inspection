@@ -45,6 +45,7 @@ namespace 中村さん手法sample
         private void OnClick_全て実行(object sender, EventArgs e)
         {
             if (編集後 != null) 編集後.Dispose();
+            明るさ調整後 = 明るさ調整(編集前);
             編集後 = トップハットを二値化(明るさ調整後);
         }
 
@@ -53,6 +54,7 @@ namespace 中村さん手法sample
             IplImage sample = src.Clone();
             sample = コントラスト調整(sample, double.Parse(textBox_cont.Text));
             if (textBox_bright.Text != "0") sample=brightness(sample, double.Parse(textBox_bright.Text));
+            
             明るさ調整後 = sample;
             return sample;
         }
@@ -240,8 +242,8 @@ namespace 中村さん手法sample
         {
             double isnumber;
             if (double.TryParse(textBox_cont.Text, out isnumber))
-                if (isnumber >= trackBar_cont.Minimum * 10 && isnumber <= trackBar_cont.Maximum * 10)
-                    trackBar_cont.Value = (int)isnumber * 10;
+                if (isnumber*10 >= trackBar_cont.Minimum&& isnumber*10 <= trackBar_cont.Maximum)
+                    trackBar_cont.Value = (int)(isnumber * 10);
         }
         private void ValueChanged_bright(object sender, EventArgs e)
         {
@@ -303,6 +305,28 @@ namespace 中村さん手法sample
             if (double.TryParse(textBox_TopHatTH.Text, out isnumber))
                 if (isnumber >= trackBar_TopHatTH.Minimum && isnumber <= trackBar_TopHatTH.Maximum)
                     trackBar_TopHatTH.Value = (int)isnumber;
+        }
+
+        private void OnClick_保存(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();//SaveFileDialogクラスのインスタンスを作成
+            sfd.FileName = textBox_cont.Text + "_" + textBox_bright.Text;//はじめのファイル名を指定する
+            sfd.InitialDirectory = @"result\";//はじめに表示されるフォルダを指定する
+            sfd.Filter = "画像ファイル|*.bmp;*.gif;*.jpg;*.png|全てのファイル|*.*";//[ファイルの種類]に表示される選択肢を指定する
+            sfd.FilterIndex = 1;//[ファイルの種類]ではじめに「画像ファイル」が選択されているようにする
+            sfd.Title = "保存先のファイルを選択してください";//タイトルを設定する
+            sfd.RestoreDirectory = true;//ダイアログボックスを閉じる前に現在のディレクトリを復元するようにする
+            sfd.OverwritePrompt = true;//既に存在するファイル名を指定したとき警告する．デフォルトでTrueなので指定する必要はない
+            sfd.CheckPathExists = true;//存在しないパスが指定されたとき警告を表示する．デフォルトでTrueなので指定する必要はない
+
+            //ダイアログを表示する
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                //OKボタンがクリックされたとき
+                //選択されたファイル名を表示する
+                System.Diagnostics.Debug.WriteLine(sfd.FileName);
+                pictureBoxIpl1.ImageIpl.SaveImage(sfd.FileName);
+            }
         }
 
     }
