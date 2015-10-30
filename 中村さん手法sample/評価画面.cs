@@ -285,7 +285,8 @@ namespace 中村さん手法sample
                 {int.Parse(textBox_3s.Text),int.Parse(textBox_3e.Text)},
                 {int.Parse(textBox_4s.Text),int.Parse(textBox_4e.Text)},
                 {int.Parse(textBox_5s.Text),int.Parse(textBox_5e.Text)}, 
-            };          
+            };
+            List<int[]> グラフデータ = new List<int[]>();
 
             //第一世代の遺伝子をランダムに作成し、それをいくつか個作る
             //そのあと遺伝子の評価が行われ、点数化される
@@ -304,6 +305,7 @@ namespace 中村さん手法sample
                 gene = 成績順から次の遺伝子を作成(gene, 実験体数, パラメータ, 受け継がれる個体数, 突然変異確率, 突然変異の範囲);
                 gene = 遺伝子を成績順にソート(gene, 実験体数, パラメータ.Length / 2);
                 
+
                  System.Diagnostics.Debug.WriteLine(今の世代);
                 progressBar1.Value = 今の世代;
 
@@ -311,10 +313,13 @@ namespace 中村さん手法sample
                     遺伝子情報をCSV出力(gene, 実験体数, パラメータ.Length / 2,
                       DateTime.Now.ToString("yy-MM-dd_") + 突然変異確率 + "-" + 突然変異の範囲 + "-" + 今の世代 + "_");
 
+                if (checkBox_graph.Checked && (今の世代%int.Parse(textBox_pitch.Text)==0))
+                    グラフデータ.Add(new int[] { 今の世代, gene[0,パラメータ.Length / 2] });
+
                 今の世代++;
             }
             遺伝子情報を画面に出力(gene[0, 0], gene[0, 1], gene[0, 2], gene[0, 3], gene[0, 4], gene[0, 5], gene[0, 6], gene[0, 7]);
-
+            if (checkBox_graph.Checked) グラフデータを出力(グラフデータ, DateTime.Now.ToString("yy-MM-dd_") + "グラフデータ");
 
         }
         private int[,] ランダムで遺伝子生成(int 遺伝子の個数, int[,] パラメータ)
@@ -457,21 +462,7 @@ namespace 中村さん手法sample
             
             return 突然変異;
         }
-        private void 遺伝子情報をCSV出力(int[,] 遺伝子,int 実験体数,int パラメータ数,String ファイル名)
-        {
-            System.IO.Directory.CreateDirectory(@"result");
-            String 結果 = "";
-            for (int i = 0; i < 実験体数; i++)
-                for (int j = 0; j < パラメータ数+1; j++)
-                {
-                    結果 += 遺伝子[i, j] + ",";
-                    if (j == パラメータ数) 結果 += "\n";
-                }
-            using (StreamWriter w = new StreamWriter(@"result\"+ファイル名+".csv"))
-            {
-                w.Write(結果);
-            }
-        }
+
         private void 遺伝子情報を画面に出力(int p1,int p2,int p3,int p4,int p5,int p6,int p7,int 点数)
         {
              System.Diagnostics.Debug.WriteLine("画像出力");
@@ -561,7 +552,7 @@ namespace 中村さん手法sample
                 {int.Parse(textBox_6s.Text),int.Parse(textBox_6e.Text)},
                 {int.Parse(textBox_7s.Text),int.Parse(textBox_7e.Text)}, 
             };
-
+            List<int[]> グラフデータ = new List<int[]>();
             //親は[0~1,],子は[2~3,]に戻す
             int[,] 局所集団 = new int[4, パラメータ.Length / 2 + 1];
 
@@ -582,10 +573,12 @@ namespace 中村さん手法sample
                 
             while (今の世代 <= 最終世代)
             {
+                int max_score = 0;//グラフデータ作成のため
                 局所集団 = 次の局所集団を作成(局所集団, パラメータ);
                 for (int i = 0; i < 4; i++)
                 {
                     局所集団[i, パラメータ.Length / 2] = 評価結果(局所集団[i, 0], 局所集団[i, 1], 局所集団[i, 2], 局所集団[i, 3], 局所集団[i, 4],局所集団[i, 5],局所集団[i, 6]);
+                    if (局所集団[i, パラメータ.Length / 2] > max_score) max_score = 局所集団[i, パラメータ.Length / 2];
                 
                 }
                  System.Diagnostics.Debug.WriteLine(今の世代);
@@ -596,13 +589,16 @@ namespace 中村さん手法sample
                     遺伝子情報をCSV出力(局所集団, 4, パラメータ.Length / 2,
                        DateTime.Now.ToString("yy-MM-dd_") + "Pf_" + 今の世代 + "_");
                 }
+                if (checkBox_graph.Checked && (今の世代 % int.Parse(textBox_pitch.Text) == 0))
+                    グラフデータ.Add(new int[] { 今の世代, max_score });
                 if (perfect) break;
                 今の世代++;
             }
 
             局所集団 = 遺伝子を成績順にソート(局所集団, 4, パラメータ.Length / 2);
             遺伝子情報を画面に出力(局所集団[0, 0], 局所集団[0, 1], 局所集団[0, 2], 局所集団[0, 3], 局所集団[0, 4], 局所集団[0, 5], 局所集団[0, 6], 局所集団[0, 7]);
-             System.Diagnostics.Debug.WriteLine("PfGA終了");
+            グラフデータを出力(グラフデータ, DateTime.Now.ToString("yy-MM-dd_") + "グラフデータ");
+            System.Diagnostics.Debug.WriteLine("PfGA終了");
             progressBar1.Value = 最終世代;
         }
         private int[] ランダムに遺伝子1つ作成(int[,] パラメータ)
@@ -893,6 +889,32 @@ namespace 中村さん手法sample
             }
 
             return group;
+        }
+        private void 遺伝子情報をCSV出力(int[,] 遺伝子, int 実験体数, int パラメータ数, String ファイル名)
+        {
+            System.IO.Directory.CreateDirectory(@"result");
+            String 結果 = "";
+            for (int i = 0; i < 実験体数; i++)
+                for (int j = 0; j < パラメータ数 + 1; j++)
+                {
+                    結果 += 遺伝子[i, j] + ",";
+                    if (j == パラメータ数) 結果 += "\n";
+                }
+            using (StreamWriter w = new StreamWriter(@"result\" + ファイル名 + ".csv"))
+            {
+                w.Write(結果);
+            }
+        }
+        private void グラフデータを出力(List<int[]> data, string ファイル名)
+        {
+            System.IO.Directory.CreateDirectory(@"result");
+            String 結果 = "";
+            foreach(int[] score in data)結果+=score[0]+","+score[1]+"\n";
+
+            using (StreamWriter w = new StreamWriter(@"result\" + ファイル名 + ".csv"))
+            {
+                w.Write(結果);
+            }
         }
     }
 }

@@ -59,6 +59,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.textBox_6e = new System.Windows.Forms.TextBox();
             this.textBox_6s = new System.Windows.Forms.TextBox();
+            this.checkBox_graph = new System.Windows.Forms.CheckBox();
+            this.textBox_pitch = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIpl1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -327,13 +329,35 @@
             this.textBox_6s.TabIndex = 26;
             this.textBox_6s.Text = "10";
             // 
+            // checkBox_graph
+            // 
+            this.checkBox_graph.AutoSize = true;
+            this.checkBox_graph.Checked = true;
+            this.checkBox_graph.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_graph.Location = new System.Drawing.Point(12, 428);
+            this.checkBox_graph.Name = "checkBox_graph";
+            this.checkBox_graph.Size = new System.Drawing.Size(118, 16);
+            this.checkBox_graph.TabIndex = 32;
+            this.checkBox_graph.Text = "グラフ出力(↓pitch)";
+            this.checkBox_graph.UseVisualStyleBackColor = true;
+            // 
+            // textBox_pitch
+            // 
+            this.textBox_pitch.Location = new System.Drawing.Point(90, 450);
+            this.textBox_pitch.Name = "textBox_pitch";
+            this.textBox_pitch.Size = new System.Drawing.Size(30, 19);
+            this.textBox_pitch.TabIndex = 33;
+            this.textBox_pitch.Text = "10";
+            // 
             // 評価画面
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(474, 437);
+            this.ClientSize = new System.Drawing.Size(575, 486);
+            this.Controls.Add(this.textBox_pitch);
+            this.Controls.Add(this.checkBox_graph);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox_7e);
             this.Controls.Add(this.textBox_7s);
@@ -406,5 +430,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBox_6e;
         private System.Windows.Forms.TextBox textBox_6s;
+        private System.Windows.Forms.CheckBox checkBox_graph;
+        private System.Windows.Forms.TextBox textBox_pitch;
     }
 }
