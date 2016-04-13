@@ -171,7 +171,7 @@
             this.textBox_ノイズ除去.Name = "textBox_ノイズ除去";
             this.textBox_ノイズ除去.Size = new System.Drawing.Size(27, 19);
             this.textBox_ノイズ除去.TabIndex = 20;
-            this.textBox_ノイズ除去.Text = "9";
+            this.textBox_ノイズ除去.Text = "8";
             this.textBox_ノイズ除去.TextChanged += new System.EventHandler(this.TextChanged_ノイズ除去);
             // 
             // メイン画面

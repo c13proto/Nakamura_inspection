@@ -84,11 +84,11 @@ namespace 中村さん手法sample
             int height = src.Height;
             int center_x = 640 / 2;
             int center_y = 480 / 2;
-            CvSize roiSize = new CvSize(640,480);
+            CvSize roiSize = new CvSize(width,height);
 
 
             for (int roi = 0; roi < 4;roi++ )
-            {
+            {//4枚検査用になっている
                 double[] vals = new double[9];
                 double average = 0;
                 double diff = 0;
@@ -119,7 +119,7 @@ namespace 中村さん手法sample
                         Cv.Set2D(sample, roiPoint.Y + y, roiPoint.X+x, cs);
                     }
                 Cv.ResetImageROI(src);
-                if (width == 640) break;
+                if (width != 640*2) break;
             }
             //if (width == 640 * 4)
             //{
